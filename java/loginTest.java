@@ -27,8 +27,14 @@ public class loginTest {
         HSSFRow row1=sheet.getRow(1);
         HSSFCell cell1=row1.getCell(0);
         HSSFCell cell2=row1.getCell(1);
+        HSSFCell cell3=row1.getCell(2);
+        HSSFCell cell4=row1.getCell(3);
+        HSSFCell cell5=row1.getCell(4);
         String username1=cell1.getStringCellValue();
         String password1=cell2.getStringCellValue();
+        String firstname=cell3.getStringCellValue();
+        String lastname=cell4.getStringCellValue();
+        String zipcode= String.valueOf(cell5.getNumericCellValue());
         WebElement username = driver.findElement(By.xpath("//*[@id='user-name']"));
         username.click();
         username.sendKeys(username1);
@@ -38,25 +44,83 @@ public class loginTest {
         WebElement loginButton = driver.findElement(By.xpath("//*[@id='login-button']"));
         loginButton.click();
 
-        WebElement sort = driver.findElement(By.xpath("//*[@id=\"header_container\"]/div[2]/div[2]/span/select"));
+        //Select sort button high to low and add highest product in cart
+        WebElement sort = driver.findElement(By.xpath("//*[@id='header_container']//span/select"));
         sort.click();
+        Thread.sleep(3000);
+        WebElement HighToLow = driver.findElement(By.xpath("//*[@id='header_container']//select/option[4]"));
+        HighToLow.click();
+        Thread.sleep(3000);
+        WebElement HighestPricedProduct = driver.findElement(By.xpath("//*[@id='add-to-cart-sauce-labs-fleece-jacket']"));
+        HighestPricedProduct.click();
+        Thread.sleep(3000);
 
-        WebElement high_to_low = driver.findElement(By.xpath("//*[@id=\"header_container\"]/div[2]/div[2]/span/select/option[4]"));
-        high_to_low.click();
 
-        WebElement cart = driver.findElement(By.xpath("//*[@id=\"add-to-cart-sauce-labs-fleece-jacket\"]"));
+        //remove product from cart
+        WebElement cart = driver.findElement(By.xpath("//a[@class='shopping_cart_link']"));
         cart.click();
+        Thread.sleep(3000);
+        WebElement removeProduct = driver.findElement(By.xpath("//*[@id='remove-sauce-labs-fleece-jacket']"));
+        removeProduct.click();
+        Thread.sleep(3000);
+        WebElement continueShopping = driver.findElement(By.id("continue-shopping"));
+        continueShopping.click();
+        Thread.sleep(3000);
 
-        Thread.sleep(5000);
 
-        WebElement remove_product = driver.findElement(By.xpath("//*[@id=\"remove-sauce-labs-fleece-jacket\"]"));
-        remove_product.click();
+        //Again sort high to low and add the product again
+        WebElement sort2 = driver.findElement(By.xpath("//*[@id='header_container']//span/select"));
+        sort2.click();
+        Thread.sleep(3000);
+        WebElement HighToLow1 = driver.findElement(By.xpath("//*[@id='header_container']//select/option[4]"));
+        HighToLow1.click();
+        Thread.sleep(3000);
+        WebElement HighestPricedProduct1 = driver.findElement(By.xpath("//*[@id='add-to-cart-sauce-labs-fleece-jacket']"));
+        HighestPricedProduct1.click();
+        Thread.sleep(3000);
 
-        Thread.sleep(5000);
+        //Sort the page to low to high and add lowest product to cart and checkout
+        WebElement sort1 = driver.findElement(By.xpath("//*[@id='header_container']//span/select"));
+        sort1.click();
+        Thread.sleep(3000);
+        WebElement LowToHigh = driver.findElement(By.xpath("//*[@id='header_container']//select/option[3]"));
+        LowToHigh.click();
+        Thread.sleep(3000);
+        WebElement LowestPricedProduct = driver.findElement(By.xpath("//*[@id='add-to-cart-sauce-labs-onesie']"));
+        LowestPricedProduct.click();
+        Thread.sleep(3000);
+        WebElement cart3 = driver.findElement(By.xpath("//a[@class='shopping_cart_link']"));
+        cart3.click();
+        Thread.sleep(3000);
+        WebElement checkout = driver.findElement(By.id("checkout"));
+        checkout.click();
+        Thread.sleep(3000);
 
-        WebElement add_cart = driver.findElement(By.xpath("//*[@id=\"add-to-cart-sauce-labs-fleece-jacket\"]"));
-        add_cart.click();
+        //Add firstname, lastname and zipcode from excel
+        WebElement firstName = driver.findElement(By.id("first-name"));
+        firstName.click();
+        firstName.sendKeys(firstname);
+        Thread.sleep(3000);
+        WebElement lastName = driver.findElement(By.id("last-name"));
+        lastName.click();
+        lastName.sendKeys(lastname);
+        Thread.sleep(3000);
+        WebElement zipCode = driver.findElement(By.id("postal-code"));
+        zipCode.click();
+        zipCode.sendKeys(zipcode);
+        Thread.sleep(3000);
+        WebElement continueButton = driver.findElement(By.xpath("//input[@class='submit-button btn btn_primary cart_button btn_action']"));
+        continueButton.click();
+        Thread.sleep(3000);
 
+        //click on continue button
+        WebElement finish = driver.findElement(By.xpath("//button[@class='btn btn_action btn_medium cart_button']"));
+        finish.click();
+        Thread.sleep(3000);
+
+        //Order Placed page
+        WebElement SuccessMessage = driver.findElement(By.xpath("//*[@id=\"checkout_complete_container\"]/h2"));
+        System.out.println(SuccessMessage);
     }
     //@Test
     //public  void read_user(WebDriver driver) throws IOException {
